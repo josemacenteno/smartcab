@@ -23,6 +23,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
+        self.firt_cycle = True
 
 
 
@@ -44,7 +45,10 @@ class LearningAgent(Agent):
             self.epsilon = 0
             self.alpha = 0
         else:
-            self.epsilon = self.epsilon - 0.05
+            if self.firt_cycle:
+                self.firt_cycle = False
+            else:
+                self.epsilon = self.epsilon - 0.05
 
 
         return None
@@ -66,7 +70,7 @@ class LearningAgent(Agent):
         # With the hand-engineered features, this learning process gets entirely negated.
         
         # Set 'state' as a tuple of relevant data for the agent        
-        state = (waypoint, inputs['light'], inputs['oncoming'])
+        state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'])
 
         return state
 
@@ -98,7 +102,7 @@ class LearningAgent(Agent):
         #   Then, for each action available, set the initial Q-value to 0.0
         if self.learning:
             if state not in self.Q:
-                self.Q[state] = {'left':0.0, 'right':0.0, 'forward':0.0, None:0.0, } 
+                self.Q[state] = {'left':0.0, 'right':0.0, 'forward':0.0, None:0.0} 
 
 
     def choose_action(self, state):
@@ -184,7 +188,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay = 0.01, log_metrics = True, display = True)
+    sim = Simulator(env, update_delay = 0.01, log_metrics = True, display = False)
     
     ##############
     # Run the simulator
