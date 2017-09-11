@@ -4,6 +4,10 @@ from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
 
+HYPER_A = 0.95
+HYPER_epsilon = 1.0
+HYPER_alpha = 0.9
+
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
         This is the object you will be modifying. """ 
@@ -48,7 +52,7 @@ class LearningAgent(Agent):
             if self.firt_cycle:
                 self.firt_cycle = False
             else:
-                self.epsilon = self.epsilon - 0.05
+                self.epsilon = self.epsilon * HYPER_A
 
 
         return None
@@ -173,7 +177,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning = True)
+    agent = env.create_agent(LearningAgent, learning = True, alpha = HYPER_alpha, epsilon = HYPER_epsilon)
     
     ##############
     # Follow the driving agent
@@ -188,7 +192,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay = 0.01, log_metrics = True, display = False)
+    sim = Simulator(env, update_delay = 0.01, log_metrics = True, display = False, optimized = True)
     
     ##############
     # Run the simulator
