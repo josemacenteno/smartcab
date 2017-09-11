@@ -4,9 +4,9 @@ from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
 
-HYPER_A = 0.95
+HYPER_A = 0.98
 HYPER_epsilon = 1.0
-HYPER_alpha = 0.9
+HYPER_alpha = 0.9   
 
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
